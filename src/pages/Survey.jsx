@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import QuestionCard from '../components/QuestionCard';
 import { questions } from "../data/questions";
 import { useNavigate } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import { MdArrowRight } from 'react-icons/md';
 import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
 import { GiConfirmed } from 'react-icons/gi';
+import Timer from '../components/Timer';
 
 
 const Survey = ({ setResponses }) => {
@@ -13,6 +14,16 @@ const Survey = ({ setResponses }) => {
   const Navigate = useNavigate();
   const [answers, setAnswers] = useState({});
   const [currentQuestion, setCurrentQuestion] = useState(0)
+  const [timeLeft, setTimeLeft] = useState(60);
+
+  useEffect(() => {
+    if (timeLeft > 0) {
+      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+      return () => clearTimeout(timer);
+    } else {
+      handleSubmit();
+    }
+  }, [timeLeft]);
 
   const handleAnswer = (questionId, answer) => {
     setAnswers((prev) => ({ ...prev, [questionId]: answer }))
@@ -91,6 +102,7 @@ const Survey = ({ setResponses }) => {
             )}
           </button>
         </div>
+        <Timer timeLeft={timeLeft} />
       </div>
 
     </section>
