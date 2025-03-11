@@ -20,4 +20,3 @@ A dynamic survey app built with **React.js** and styled using **Tailwind CSS**.
 - **React.js** ⚛️
 - **Tailwind CSS** 🎨
 
-## Getting Started 🏁
